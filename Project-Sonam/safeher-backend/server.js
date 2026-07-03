@@ -88,6 +88,33 @@ app.get('/api/health', (req, res) => {
   })
 })
 
+// ── Landing page ─────────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.type('html').send(`<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safique Backend</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #0f172a; color: #f8fafc; display: grid; place-items: center; min-height: 100vh; }
+      .card { background: #111827; padding: 32px; border-radius: 16px; max-width: 640px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+      h1 { margin-top: 0; }
+      code { background: #1f2937; padding: 2px 6px; border-radius: 6px; }
+      a { color: #38bdf8; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Safique Backend</h1>
+      <p>This is the backend service for the Safique safety app.</p>
+      <p>Use the API endpoints under <code>/api</code> to manage users, routes, SOS alerts, reports, and more.</p>
+      <p>Health check: <a href="/api/health">/api/health</a></p>
+    </div>
+  </body>
+  </html>`)
+})
+
 // ── 404 handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` })
