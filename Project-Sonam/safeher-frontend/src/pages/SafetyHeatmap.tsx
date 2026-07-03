@@ -124,52 +124,52 @@ export default function SafetyHeatmap() {
 
       {/* ── Left sidebar panel ── */}
       <div style={{
-        width: 340, flexShrink: 0, background: 'white', borderRight: '1.5px solid #EAEDF5',
+        width: 340, flexShrink: 0, background: 'rgba(10,10,30,0.95)', backdropFilter: 'blur(20px)', borderRight: '1px solid rgba(255,255,255,0.07)',
         display: 'flex', flexDirection: 'column', overflow: 'hidden',
-        boxShadow: '4px 0 20px rgba(15,15,35,0.04)',
+        boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
       }}>
 
         {/* Header */}
-        <div style={{ padding: '28px 24px 20px', borderBottom: '1.5px solid #EAEDF5' }}>
+        <div style={{ padding: '28px 24px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#FF5A7A' }} className="animate-blink" />
-            <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#7A7A95' }}>Live</span>
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#FF4D8D', boxShadow:'0 0 8px #FF4D8D' }} className="animate-blink" />
+            <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)' }}>Live</span>
           </div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0F0F23', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: 6 }}>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: 6 }}>
             Safety Heatmap
           </h1>
-          <p style={{ fontSize: 13, color: '#7A7A95' }}>{counts.totalReports} reports · {counts.total} zones tracked</p>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>{counts.totalReports} reports · {counts.total} zones tracked</p>
         </div>
 
         {/* Stats row */}
-        <div style={{ padding: '16px 24px', borderBottom: '1.5px solid #EAEDF5', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+        <div style={{ padding: '16px 24px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
           {[
-            { label: 'High Risk', count: counts.High,   color: '#FF5A7A', bg: '#FFF0F3', icon: '🔴' },
-            { label: 'Moderate',  count: counts.Medium, color: '#FFB800', bg: '#FFF8E6', icon: '🟡' },
-            { label: 'Safe',      count: counts.Low,    color: '#00C48C', bg: '#EDFBF6', icon: '🟢' },
+            { label: 'High Risk', count: counts.High,   color: '#FF5A7A', bg: 'rgba(255,90,122,0.15)', icon: '🔴' },
+            { label: 'Moderate',  count: counts.Medium, color: '#FFB800', bg: 'rgba(255,184,0,0.15)',  icon: '🟡' },
+            { label: 'Safe',      count: counts.Low,    color: '#00D98B', bg: 'rgba(0,217,139,0.15)', icon: '🟢' },
           ].map(s => (
-            <div key={s.label} style={{ background: s.bg, borderRadius: 12, padding: '12px 10px', textAlign: 'center' }}>
+            <div key={s.label} style={{ background: s.bg, borderRadius: 12, padding: '12px 10px', textAlign: 'center', border:`1px solid ${s.color}25` }}>
               <span style={{ fontSize: 16, display: 'block', marginBottom: 4 }}>{s.icon}</span>
               <p style={{ fontSize: 22, fontWeight: 900, color: s.color, lineHeight: 1 }}>{s.count}</p>
-              <p style={{ fontSize: 10.5, fontWeight: 600, color: s.color, marginTop: 2 }}>{s.label}</p>
+              <p style={{ fontSize: 10.5, fontWeight: 600, color: s.color, marginTop: 2, opacity:0.8 }}>{s.label}</p>
             </div>
           ))}
         </div>
 
         {/* Filters */}
-        <div style={{ padding: '16px 24px', borderBottom: '1.5px solid #EAEDF5' }}>
+        <div style={{ padding: '16px 24px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
-            <HiFilter style={{ color: '#7A7A95', fontSize: 14 }} />
-            <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#7A7A95' }}>Filter Zones</span>
+            <HiFilter style={{ color: 'rgba(255,255,255,0.3)', fontSize: 14 }} />
+            <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)' }}>Filter Zones</span>
           </div>
           <div style={{ display: 'flex', gap: 6 }}>
             {filterOptions.map(f => (
               <motion.button key={f.key} whileTap={{ scale: 0.94 }} onClick={() => setFilter(f.key)} style={{
                 flex: 1, padding: '8px 8px', borderRadius: 10, fontSize: 11.5, fontWeight: 700,
-                cursor: 'pointer', transition: 'all 0.15s', border: 'none',
-                background: filter === f.key ? f.color : f.bg,
+                cursor: 'pointer', transition: 'all 0.15s', border: '1px solid transparent',
+                background: filter === f.key ? f.color : 'rgba(255,255,255,0.05)',
                 color: filter === f.key ? 'white' : f.color,
-                boxShadow: filter === f.key ? `0 4px 12px ${f.color}35` : 'none',
+                boxShadow: filter === f.key ? `0 4px 16px ${f.color}50` : 'none',
               }}>
                 {f.label}
               </motion.button>
@@ -179,7 +179,7 @@ export default function SafetyHeatmap() {
 
         {/* Zone list */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 24px' }} className="no-scrollbar">
-          <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#7A7A95', marginBottom: 12 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>
             {filter === 'all' ? 'All Zones' : `${filter} Risk Zones`} ({displayed.length})
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -188,21 +188,18 @@ export default function SafetyHeatmap() {
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
                 style={{
                   display: 'flex', alignItems: 'flex-start', gap: 12,
-                  padding: '14px 14px', background: '#F7F8FC', borderRadius: 12,
-                  border: '1.5px solid #EAEDF5', borderLeft: `4px solid ${zone.color}`,
+                  padding: '14px 14px', background: `${zone.color}08`, borderRadius: 12,
+                  border: `1px solid ${zone.color}20`, borderLeft: `4px solid ${zone.color}`,
                 }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                    <p style={{ fontSize: 13.5, fontWeight: 700, color: '#0F0F23', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 160 }}>{zone.label}</p>
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 999,
-                      background: zone.color + '20', color: zone.color, flexShrink: 0, marginLeft: 8,
-                    }}>{zone.risk}</span>
+                    <p style={{ fontSize: 13.5, fontWeight: 700, color: 'rgba(255,255,255,0.85)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 160 }}>{zone.label}</p>
+                    <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 999, background: zone.color + '25', color: zone.color, flexShrink: 0, marginLeft: 8 }}>{zone.risk}</span>
                   </div>
-                  <p style={{ fontSize: 12, color: '#7A7A95', lineHeight: 1.4, marginBottom: 6 }}>{zone.detail}</p>
+                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.4, marginBottom: 6 }}>{zone.detail}</p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                     <span style={{ fontSize: 11, color: zone.color, fontWeight: 600 }}>{riskIcon[zone.risk]}</span>
-                    <span style={{ fontSize: 11, color: '#7A7A95' }}>{zone.reports} report{zone.reports !== 1 ? 's' : ''}</span>
+                    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{zone.reports} report{zone.reports !== 1 ? 's' : ''}</span>
                   </div>
                 </div>
               </motion.div>
@@ -211,14 +208,10 @@ export default function SafetyHeatmap() {
         </div>
 
         {/* Footer tip */}
-        <div style={{ padding: '14px 24px 20px', borderTop: '1.5px solid #EAEDF5' }}>
-          <div style={{
-            background: '#F0EEFF', border: '1.5px solid rgba(108,99,255,0.15)',
-            borderRadius: 12, padding: '12px 14px',
-            display: 'flex', alignItems: 'flex-start', gap: 10,
-          }}>
-            <HiShieldCheck style={{ color: '#6C63FF', fontSize: 16, flexShrink: 0, marginTop: 2 }} />
-            <p style={{ fontSize: 12, color: '#6C63FF', lineHeight: 1.5 }}>
+        <div style={{ padding: '14px 24px 20px', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+          <div style={{ background: 'rgba(124,111,255,0.1)', border: '1px solid rgba(124,111,255,0.2)', borderRadius: 12, padding: '12px 14px', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+            <HiShieldCheck style={{ color: '#A78BFF', fontSize: 16, flexShrink: 0, marginTop: 2 }} />
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
               Tap any circle on the map for details. Avoid red zones especially after dark.
             </p>
           </div>

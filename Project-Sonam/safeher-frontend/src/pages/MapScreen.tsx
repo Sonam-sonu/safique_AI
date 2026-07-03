@@ -161,31 +161,31 @@ export default function MapScreen() {
   }
 
   return (
-    <div style={{ display:'flex', height:'100vh', overflow:'hidden' }}>
+    <div className="map-layout" style={{ display:'flex', height:'100vh', overflow:'hidden' }}>
 
       {/* ── Map fills the rest ── */}
-      <div style={{ flex:1, position:'relative' }}>
+      <div className="map-container" style={{ flex:1, position:'relative' }}>
         {/* Top bar */}
         <div style={{ position:'absolute', top:20, left:20, right:20, zIndex:1000, display:'flex', gap:12, alignItems:'center' }}>
           <button onClick={()=>navigate(-1)} style={{
-            background:'white', border:'1.5px solid #E2E4EE', borderRadius:12, padding:'10px 14px',
-            display:'flex', alignItems:'center', gap:6, fontSize:14, fontWeight:600, color:'#0F0F23',
-            cursor:'pointer', boxShadow:'0 2px 10px rgba(15,15,35,0.08)', whiteSpace:'nowrap',
+            background:'rgba(10,10,30,0.9)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:12, padding:'10px 14px',
+            display:'flex', alignItems:'center', gap:6, fontSize:14, fontWeight:600, color:'rgba(255,255,255,0.8)',
+            cursor:'pointer', boxShadow:'0 4px 16px rgba(0,0,0,0.4)', whiteSpace:'nowrap',
           }}>← Back</button>
 
-          <div style={{ flex:1, background:'white', border:'1.5px solid #E2E4EE', borderRadius:12, padding:'12px 18px', boxShadow:'0 2px 10px rgba(15,15,35,0.08)' }}>
-            <div style={{ fontSize:11, color:'#7A7A95', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.08em' }}>Route Comparison</div>
-            <div style={{ fontSize:14, fontWeight:700, color:'#0F0F23', marginTop:2 }}>Showing 3 routes — click a route to highlight</div>
+          <div style={{ flex:1, background:'rgba(10,10,30,0.9)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:12, padding:'12px 18px', boxShadow:'0 4px 16px rgba(0,0,0,0.4)' }}>
+            <div style={{ fontSize:11, color:'rgba(255,255,255,0.3)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.08em' }}>Route Comparison</div>
+            <div style={{ fontSize:14, fontWeight:700, color:'rgba(255,255,255,0.8)', marginTop:2 }}>Showing 3 routes — click a route to highlight</div>
           </div>
 
           <motion.button whileTap={{scale:0.95}} onClick={()=>setTracking(!tracking)} style={{
-            background: tracking?'#00C48C':'white',
-            color: tracking?'white':'#7A7A95',
-            border:'1.5px solid #E2E4EE', borderRadius:12, padding:'10px 18px',
+            background: tracking ? 'linear-gradient(135deg,#00D98B,#00B874)' : 'rgba(10,10,30,0.9)',
+            color: tracking ? 'white' : 'rgba(255,255,255,0.5)',
+            border:'1px solid rgba(255,255,255,0.1)', backdropFilter:'blur(16px)', borderRadius:12, padding:'10px 18px',
             fontSize:13, fontWeight:700, cursor:'pointer', display:'flex', alignItems:'center', gap:8,
-            boxShadow:'0 2px 10px rgba(15,15,35,0.08)', transition:'all 0.2s',
+            boxShadow: tracking ? '0 6px 20px rgba(0,217,139,0.4)' : '0 4px 16px rgba(0,0,0,0.4)', transition:'all 0.2s',
           }}>
-            {tracking && <span style={{ width:7, height:7, borderRadius:'50%', background:'white', display:'inline-block' }} className="animate-blink" />}
+            {tracking && <span style={{ width:7, height:7, borderRadius:'50%', background:'white', display:'inline-block', boxShadow:'0 0 6px white' }} className="animate-blink" />}
             {tracking ? '🔴 Live' : '📡 Track Live'}
           </motion.button>
         </div>
@@ -239,19 +239,18 @@ export default function MapScreen() {
 
       {/* ── Right sidebar panel ── */}
       <div style={{
-        width:320, flexShrink:0, background:'white', borderLeft:'1px solid #EAEDF5',
+        width:320, flexShrink:0, background:'rgba(10,10,30,0.95)', backdropFilter:'blur(20px)', borderLeft:'1px solid rgba(255,255,255,0.07)',
         display:'flex', flexDirection:'column', overflow:'hidden',
-        boxShadow:'-4px 0 20px rgba(15,15,35,0.06)',
+        boxShadow:'-4px 0 32px rgba(0,0,0,0.5)',
       }}>
         {/* Header */}
-        <div style={{ padding:'24px 24px 20px', borderBottom:'1px solid #EAEDF5' }}>
-          <div style={{ fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'0.08em', color:'#7A7A95', marginBottom:6 }}>Route Panel</div>
-          <h2 style={{ fontSize:18, fontWeight:700, color:'#0F0F23', lineHeight:1.3 }}>Compare All Routes</h2>
-          {/* Legend */}
+        <div style={{ padding:'24px 24px 20px', borderBottom:'1px solid rgba(255,255,255,0.07)' }}>
+          <div style={{ fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'0.08em', color:'rgba(255,255,255,0.3)', marginBottom:6 }}>Route Panel</div>
+          <h2 style={{ fontSize:18, fontWeight:700, color:'white', lineHeight:1.3 }}>Compare All Routes</h2>
           <div style={{ display:'flex', gap:16, marginTop:12 }}>
             {ROUTES.map(r=>(
-              <div key={r.id} style={{ display:'flex', alignItems:'center', gap:6, fontSize:12, color:'#7A7A95' }}>
-                <div style={{ width:18, height:5, borderRadius:999, background:r.color }} />
+              <div key={r.id} style={{ display:'flex', alignItems:'center', gap:6, fontSize:12, color:'rgba(255,255,255,0.35)' }}>
+                <div style={{ width:18, height:5, borderRadius:999, background:r.color, boxShadow:`0 0 6px ${r.color}` }} />
                 {r.type}
               </div>
             ))}
@@ -259,17 +258,18 @@ export default function MapScreen() {
         </div>
 
         {/* Filter pills */}
-        <div style={{ padding:'16px 20px', borderBottom:'1px solid #EAEDF5', display:'flex', gap:8 }}>
+        <div style={{ padding:'16px 20px', borderBottom:'1px solid rgba(255,255,255,0.07)', display:'flex', gap:8 }}>
           <button onClick={()=>setActive(null)} style={{
-            padding:'6px 14px', borderRadius:999, fontSize:12, fontWeight:700, cursor:'pointer', transition:'all 0.15s', border:'2px solid transparent',
-            background: active===null?'#0F0F23':'#F7F8FC', color: active===null?'white':'#7A7A95',
+            padding:'6px 14px', borderRadius:999, fontSize:12, fontWeight:700, cursor:'pointer', transition:'all 0.15s', border:'1px solid rgba(255,255,255,0.1)',
+            background: active===null?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.05)', color: active===null?'white':'rgba(255,255,255,0.4)',
           }}>All</button>
           {ROUTES.map(r=>(
             <button key={r.id} onClick={()=>setActive(active===r.id?null:r.id)} style={{
               padding:'6px 14px', borderRadius:999, fontSize:12, fontWeight:700, cursor:'pointer', transition:'all 0.15s',
-              background: active===r.id ? r.color : `${r.color}20`,
+              background: active===r.id ? r.color : `${r.color}18`,
               color: active===r.id ? 'white' : r.color,
-              border: `2px solid ${active===r.id ? r.color : 'transparent'}`,
+              border: `1px solid ${active===r.id ? r.color : r.color+'30'}`,
+              boxShadow: active===r.id ? `0 4px 14px ${r.color}50` : 'none',
             }}>Route {r.id}</button>
           ))}
         </div>
@@ -279,17 +279,18 @@ export default function MapScreen() {
           {ROUTES.map((r,i)=>(
             <motion.div key={r.id} whileHover={{y:-2}} onClick={()=>setActive(active===r.id?null:r.id)}
               style={{
-                background: active===r.id ? `${r.color}12` : '#F7F8FC',
-                border:`2px solid ${active===r.id?r.color:'transparent'}`,
+                background: active===r.id ? `${r.color}18` : 'rgba(255,255,255,0.04)',
+                border:`1px solid ${active===r.id?r.color+'40':'rgba(255,255,255,0.07)'}`,
                 borderRadius:16, padding:18, cursor:'pointer', transition:'all 0.15s',
+                boxShadow: active===r.id ? `0 8px 24px ${r.color}25` : 'none',
               }}>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:10 }}>
                 <div>
                   <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:4 }}>
-                    <span style={{ fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'0.06em', color:'#7A7A95' }}>Route {r.id}</span>
-                    {i===0 && <span style={{ background:'#00C48C', color:'white', fontSize:10, fontWeight:800, padding:'2px 8px', borderRadius:999 }}>BEST</span>}
+                    <span style={{ fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'0.06em', color:'rgba(255,255,255,0.3)' }}>Route {r.id}</span>
+                    {i===0 && <span style={{ background:'linear-gradient(135deg,#00D98B,#00B874)', color:'white', fontSize:10, fontWeight:800, padding:'2px 8px', borderRadius:999, boxShadow:'0 0 10px rgba(0,217,139,0.4)' }}>BEST</span>}
                   </div>
-                  <div style={{ fontSize:14, fontWeight:600, color:'#0F0F23' }}>{r.type} Route</div>
+                  <div style={{ fontSize:14, fontWeight:600, color:'rgba(255,255,255,0.75)' }}>{r.type} Route</div>
                 </div>
                 <div style={{
                   width:52, height:52, borderRadius:14,
@@ -303,9 +304,9 @@ export default function MapScreen() {
               </div>
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
                 {[['⏱ Time',r.time],['📏 Distance',r.dist]].map(([lbl,val])=>(
-                  <div key={lbl as string} style={{ background:'white', borderRadius:10, padding:'8px 12px' }}>
-                    <div style={{ fontSize:11, color:'#7A7A95' }}>{lbl}</div>
-                    <div style={{ fontSize:13, fontWeight:700, color:'#0F0F23', marginTop:2 }}>{val}</div>
+                  <div key={lbl as string} style={{ background:'rgba(255,255,255,0.05)', borderRadius:10, padding:'8px 12px', border:'1px solid rgba(255,255,255,0.06)' }}>
+                    <div style={{ fontSize:11, color:'rgba(255,255,255,0.3)' }}>{lbl}</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:'rgba(255,255,255,0.8)', marginTop:2 }}>{val}</div>
                   </div>
                 ))}
               </div>
@@ -314,13 +315,13 @@ export default function MapScreen() {
         </div>
 
         {/* Footer actions */}
-        <div style={{ padding:'16px 20px', borderTop:'1px solid #EAEDF5', display:'flex', flexDirection:'column', gap:10 }}>
+        <div style={{ padding:'16px 20px', borderTop:'1px solid rgba(255,255,255,0.07)', display:'flex', flexDirection:'column', gap:10 }}>
           <button className="btn btn-primary" style={{ width:'100%', padding:'13px 20px', fontSize:14 }}
             onClick={()=>navigate('/route-details')}>View Route Details</button>
           <button onClick={()=>navigate('/sos')} style={{
             width:'100%', padding:'12px 20px', fontSize:14, fontWeight:600, borderRadius:12, cursor:'pointer',
-            background:'#FFEEF2', color:'#E04A6A', border:'1.5px solid rgba(255,90,122,0.2)',
-            display:'flex', alignItems:'center', justifyContent:'center', gap:8,
+            background:'rgba(255,77,141,0.12)', color:'#FF80B0', border:'1px solid rgba(255,77,141,0.25)',
+            display:'flex', alignItems:'center', justifyContent:'center', gap:8, fontFamily:'inherit',
           }}>🆘 Emergency SOS</button>
         </div>
       </div>
