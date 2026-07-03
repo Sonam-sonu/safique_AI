@@ -22,15 +22,18 @@ const app = express()
 // ── Security middleware ───────────────────────────────────────────────────────
 app.use(helmet())
 
-// CORS — allow all localhost ports in dev, specific origin in prod
+// CORS — allow local development origins and the requested frontend origin
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin) return cb(null, true)
     if (process.env.NODE_ENV === 'development') {
       if (/^http:\/\/localhost(:\d+)?$/.test(origin)) return cb(null, true)
     }
-    const allowed = process.env.FRONTEND_URL || 'http://localhost:5173'
-    if (origin === allowed) return cb(null, true)
+    const allowedOrigins = [
+      process.env.FRONTEND_URL || 'http://localhost:5173',
+      'http://10.115.106.86:5173'
+    ]
+    if (allowedOrigins.includes(origin)) return cb(null, true)
     cb(new Error(`CORS: origin ${origin} not allowed`))
   },
   credentials: true,
