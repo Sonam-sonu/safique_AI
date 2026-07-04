@@ -126,11 +126,12 @@ app.use((req, res) => {
 // ── Global error handler (must be last) ──────────────────────────────────────
 app.use(errorHandler)
 
-// ── Start server (only after DB connects) ────────────────────────────────────
-const PORT = process.env.PORT || 5000
+// ── Start server locally, export app for Vercel ───────────────────────────
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL === 'true'
 
 async function startServer() {
   await connectDB()
+  const PORT = process.env.PORT || 5000
   app.listen(PORT, () => {
     console.log(`\n🚀  Safique backend running on http://localhost:${PORT}`)
     console.log(`📋  Environment: ${process.env.NODE_ENV}`)
@@ -138,4 +139,11 @@ async function startServer() {
   })
 }
 
-startServer()
+if (!isVercel) {
+  startServer().catch((err) => {
+    console.error('Failed to start server:', err)
+    process.exit(1)
+  })
+}
+
+module.exports = app
