@@ -2,7 +2,7 @@
   "name": "safique-backend",
   "version": "1.0.0",
   "description": "Safique – AI Powered Safe Route App | Backend API",
-  "main": "server.js",
+  "main": "api/index.js",
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
