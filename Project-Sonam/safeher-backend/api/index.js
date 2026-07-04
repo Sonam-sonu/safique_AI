@@ -1,3 +1,3 @@
-const app = require('../server')
+const handler = require('../server')
 
-module.exports = app
+module.exports = handler
