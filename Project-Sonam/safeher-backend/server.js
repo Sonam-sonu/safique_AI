@@ -109,7 +109,7 @@ app.get('/', (req, res) => {
       <h1>Safique Backend</h1>
       <p>This is the backend service for the Safique safety app.</p>
       <p>Use the API endpoints under <code>/api</code> to manage users, routes, SOS alerts, reports, and more.</p>
-      <p>Health check: <a href="/api/health">/api/health</a></p>
+    
     </div>
   </body>
   </html>`)
