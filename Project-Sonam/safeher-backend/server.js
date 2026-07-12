@@ -29,7 +29,7 @@ app.use(cors({
     }
     const allowedOrigins = [
       process.env.FRONTEND_URL || 'http://localhost:5173',
-      'http://10.115.106.86:5173' || 'https://safique-ai-max.vercel.app',
+      'http://10.115.106.86:5173' , 'https://safique-ai-max.vercel.app',
     ]
     if (allowedOrigins.includes(origin)) return cb(null, true)
     cb(new Error(`CORS: origin ${origin} not allowed`))
